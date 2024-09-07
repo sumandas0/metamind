@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from .attribute_def import AttributeDef
 from .entity_def import EntityDef
 from enum import Enum, auto
@@ -13,12 +13,12 @@ class RelationshipType(Enum):
 
 class RelationshipDef(BaseModel):
     name: str
-    guid: str
+    guid: Optional[str] = None
     description: str
     type: str
     properties: List[AttributeDef]
-    
+
     source: EntityDef
     target: EntityDef
-    
+
     relationship_type: RelationshipType

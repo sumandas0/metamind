@@ -9,3 +9,20 @@ dependencies = [
     "litestar>=2.11.0",
     "pydantic>=2.9.0",
 ]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.6.4",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+extend-select = ["E501"]
+exclude = ["*.ipynb"]
+
+[tool.ruff.format]
+indent-style = "space"
+exclude = ["*.ipynb"]
+
