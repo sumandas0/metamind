@@ -11,10 +11,9 @@ CREATE TABLE IF NOT EXISTS entities (
     updated_by VARCHAR(255) NOT NULL
 );
 
---Create composite index on typeName and qualifiedName
-CREATE INDEX IF NOT EXISTS type_name_qualified_name ON entities (type_name, qualified_name);
+CREATE UNIQUE INDEX IF NOT EXISTS entities_type_name_qualified_name ON entities (type_name, qualified_name);
 -- Create index on guid
-CREATE INDEX IF NOT EXISTS entities_guid ON entities (guid);
+CREATE UNIQUE INDEX IF NOT EXISTS entities_guid ON entities (guid);
 -- Create index on name
 CREATE INDEX IF NOT EXISTS entities_name ON entities (name);
 -- Create text GIN index on description

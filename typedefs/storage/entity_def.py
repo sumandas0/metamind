@@ -4,11 +4,13 @@ from psycopg2.extensions import connection
 from utils.logger import setup_logger
 from psycopg2 import sql
 from typedefs.storage.common import definition_exists
+from typedefs.registry import TypeRegistry
+from typedefs.validator.entity import entity_definition_create_validator
 
 LOGGER = setup_logger(__name__)
 
 
-def create_entity_def(conn: connection, entity_def: EntityDef) -> None:
+def create_entity_def(conn: connection, type_registry: TypeRegistry, entity_def: EntityDef) -> None:
     """
     Create a new entity definition in the database.
 
@@ -23,6 +25,8 @@ def create_entity_def(conn: connection, entity_def: EntityDef) -> None:
         error_msg = f"Entity definition already exists: {entity_def.name}"
         LOGGER.error(error_msg)
         raise ValueError(error_msg)
+
+    entity_definition_create_validator(type_registry, entity_def)
 
     with conn.cursor() as cur:
         sql_stmt = sql.SQL(
@@ -52,6 +56,9 @@ def create_entity_def(conn: connection, entity_def: EntityDef) -> None:
         cur.execute(sql_stmt)
 
     conn.commit()
+    type_registry = TypeRegistry()
+    # TODO: Implement locking mechanism to prevent race conditions
+    type_registry.add_entity_def(entity_def)
     LOGGER.info(f"Entity definition created: {entity_def.name}")
 
 
