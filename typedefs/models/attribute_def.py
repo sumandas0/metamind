@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
-from .builtins import BuiltinType
-from .enum_def import EnumDef
+from typedefs.models.builtins import BuiltinType
+from typedefs.models.enum_def import EnumDef
 
 
 class AttributeDef(BaseModel):
