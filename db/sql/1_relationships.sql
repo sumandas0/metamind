@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS relationships (
     relationship_type VARCHAR(255) NOT NULL,
     relationship_attributes JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255) NOT NULL,
     updated_by VARCHAR(255) NOT NULL
 );

@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
-from .attribute_def import AttributeDef
-from .entity_def import EntityDef
+from typedefs.models.attribute_def import AttributeDef
 from enum import Enum, auto
 
 
@@ -14,11 +13,18 @@ class RelationshipType(Enum):
 class RelationshipDef(BaseModel):
     name: str
     guid: Optional[str] = None
-    description: str
-    type: str
-    properties: List[AttributeDef]
+    description: Optional[str] = None
+    properties: List[AttributeDef] = []
 
-    source: EntityDef
-    target: EntityDef
+    source_entity_type: str
+    target_entity_type: str
 
     relationship_type: RelationshipType
+
+    version: int = 1
+
+    created_by: str = "system"
+    updated_by: str = "system"
+
+    def get_json(self):
+        return self.model_dump_json()
