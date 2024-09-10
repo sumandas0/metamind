@@ -8,6 +8,11 @@ class RelationshipType(Enum):
     ASSOCIATION = auto()
     AGGREGATION = auto()
     COMPOSITION = auto()
+    
+class Cardinality(Enum):
+    SINGLE = auto()
+    LIST = auto()
+    SET = auto()
 
 
 class RelationshipDef(BaseModel):
@@ -15,9 +20,13 @@ class RelationshipDef(BaseModel):
     guid: Optional[str] = None
     description: Optional[str] = None
     properties: List[AttributeDef] = []
-
+    relationship_label: str
     source_entity_type: str
+    source_entity_property_name: str
+    source_cardinality: Cardinality
     target_entity_type: str
+    target_entity_property_name: str
+    target_cardinality: Cardinality
 
     relationship_type: RelationshipType
 
