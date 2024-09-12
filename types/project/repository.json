@@ -1,0 +1,46 @@
+{
+  "name": "Repository",
+  "description": "Represents a generic repository entity",
+  "super_type":"Project",
+  "properties": [
+    {
+      "name": "repository_name",
+      "type": "string",
+      "description": "Name of the repository",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "repository_url",
+      "type": "string",
+      "description": "URL of the repository",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "description",
+      "type": "text",
+      "description": "Description of the repository",
+      "required": false,
+      "index": true,
+      "unique": false
+    }
+  ],
+  "relationships": [
+    {
+      "name": "project_repositories",
+      "description": "Relationship between Project and Repository",
+      "properties": [],
+      "relationship_label": "__Project.repositories",
+      "source_entity_type": "Project",
+      "source_entity_property_name": "repositories",
+      "source_cardinality": "SINGLE",
+      "target_entity_type": "Repository",
+      "target_entity_property_name": "project",
+      "target_cardinality": "LIST",
+      "relationship_type": "AGGREGATION"
+    }
+  ]
+}

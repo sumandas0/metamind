@@ -1,0 +1,23 @@
+{
+  "name": "Project",
+  "description": "Represents a project entity",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Name of the project",
+      "required": true,
+      "index": true,
+      "unique": true
+    },
+    {
+      "name": "description",
+      "type": "text",
+      "description": "Description of the project",
+      "required": false,
+      "index": true,
+      "unique": false
+    }
+  ],
+  "relationships": []
+}

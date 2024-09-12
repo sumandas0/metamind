@@ -5,14 +5,15 @@ from enum import Enum, auto
 
 
 class RelationshipType(Enum):
-    ASSOCIATION = auto()
-    AGGREGATION = auto()
-    COMPOSITION = auto()
-    
+    ASSOCIATION: str = "ASSOCIATION"
+    AGGREGATION: str = "AGGREGATION"
+    COMPOSITION: str = "COMPOSITION"
+
+
 class Cardinality(Enum):
-    SINGLE = auto()
-    LIST = auto()
-    SET = auto()
+    SINGLE: str = "SINGLE"
+    LIST: str = "LIST"
+    SET: str = "SET"
 
 
 class RelationshipDef(BaseModel):

@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "litestar>=2.11.0",
+    "orjson>=3.10.7",
     "psycopg2>=2.9.9",
     "pydantic>=2.9.0",
 ]

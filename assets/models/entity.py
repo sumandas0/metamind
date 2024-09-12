@@ -3,7 +3,6 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 
 
-
 class Entity(BaseModel):
     type: str
     guid: Optional[str] = None
@@ -14,6 +13,6 @@ class Entity(BaseModel):
     updated_at: Optional[datetime] = None
     created_by: Optional[str] = None
     updated_by: Optional[str] = None
-    
+
     def is_identifier_present(self) -> bool:
         return self.guid is not None or (self.qualified_name is not None and self.type is not None)

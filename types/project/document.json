@@ -1,0 +1,38 @@
+{
+  "name": "Document",
+  "description": "Represents a generic document entity",
+  "super_type":"Project",
+  "properties": [
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Title of the document",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "content",
+      "type": "text",
+      "description": "Content of the document",
+      "required": false,
+      "index": true,
+      "unique": false
+    }
+  ],
+  "relationships": [
+    {
+      "name": "project_documents",
+      "description": "Relationship between Project and Document",
+      "properties": [],
+      "relationship_label": "__Project.documents",
+      "source_entity_type": "Project",
+      "source_entity_property_name": "documents",
+      "source_cardinality": "SINGLE",
+      "target_entity_type": "Document",
+      "target_entity_property_name": "project",
+      "target_cardinality": "LIST",
+      "relationship_type": "AGGREGATION"
+    }
+  ]
+}

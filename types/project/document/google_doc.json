@@ -1,0 +1,42 @@
+{
+  "name": "GoogleDocsDocument",
+  "description": "Represents a Google Docs document",
+  "super_type": "Document",
+  "properties": [
+    {
+      "name": "doc_id",
+      "type": "string",
+      "description": "Google Docs document ID",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "owner_email",
+      "type": "string",
+      "description": "Email of the document owner",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "last_modified_by",
+      "type": "string",
+      "description": "Email of the user who last modified the document",
+      "required": false,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "sharing_mode",
+      "type": {
+        "name": "GoogleDocsSharingMode",
+        "values": ["private", "anyone_with_link", "public"]
+      },
+      "description": "Sharing mode of the document",
+      "required": true,
+      "index": true,
+      "unique": false
+    }
+  ]
+}

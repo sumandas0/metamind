@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Union
 from typedefs.models.builtins import BuiltinType
 from typedefs.models.enum_def import EnumDef
 
@@ -7,7 +7,7 @@ from typedefs.models.enum_def import EnumDef
 class AttributeDef(BaseModel):
     name: str
     description: str
-    type: BuiltinType | EnumDef
+    type: Union[BuiltinType, EnumDef]
     default: str
     required: bool
 

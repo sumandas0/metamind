@@ -1,0 +1,31 @@
+{
+  "name": "NotionDocument",
+  "description": "Represents a Notion document",
+  "super_type": "Document",
+  "properties": [
+    {
+      "name": "page_id",
+      "type": "string",
+      "description": "Notion page ID",
+      "required": true,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "last_edited_by",
+      "type": "string",
+      "description": "User who last edited the document",
+      "required": false,
+      "index": true,
+      "unique": false
+    },
+    {
+      "name": "parent_page_id",
+      "type": "string",
+      "description": "ID of the parent Notion page",
+      "required": false,
+      "index": true,
+      "unique": false
+    }
+  ]
+}
