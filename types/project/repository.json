@@ -18,14 +18,6 @@
       "required": true,
       "index": true,
       "unique": false
-    },
-    {
-      "name": "description",
-      "type": "text",
-      "description": "Description of the repository",
-      "required": false,
-      "index": true,
-      "unique": false
     }
   ],
   "relationships": [

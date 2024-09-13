@@ -32,17 +32,16 @@ def create_entity_def(conn: connection, type_registry: TypeRegistry, entity_def:
         sql_stmt = sql.SQL(
             """
             INSERT INTO {table_name} (
-                guid, name, super_type, alias, description, type_def_type,
+                name, super_type, alias, description, type_def_type,
                 properties, version, created_by, updated_by
             )
             VALUES (
-                {guid}, {name}, {super_type}, {alias}, {description}, {type},
+                {name}, {super_type}, {alias}, {description}, {type},
                 {properties}, {version}, {created_by}, {updated_by}
             )
             """
         ).format(
             table_name=sql.Identifier("type_defs"),
-            guid=sql.Literal(entity_def.guid),
             name=sql.Literal(entity_def.name),
             super_type=sql.Literal(entity_def.super_type),
             alias=sql.Literal(entity_def.alias),

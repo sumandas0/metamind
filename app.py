@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from psycopg2 import connect
 import os
 import uuid
-from db.management.create_tables import execute_create_tables
+from db.management.create_typedefs_tables import execute_create_tables
 
 from typedefs.storage.entity_def import create_entity_def, get_entity_def
 from typedefs.models.entity_def import EntityDef
@@ -16,7 +16,7 @@ PG_CONN_STR = os.getenv("PG_CONN_STR")
 # Connect to the database
 conn = connect(PG_CONN_STR)
 
-# execute_create_tables(conn, "db/sql")
+execute_create_tables(conn, "db/sql")
 
 entity_def = EntityDef(
     name="User",

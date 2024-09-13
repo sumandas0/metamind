@@ -4,7 +4,6 @@ from typedefs.models.relationship_def import RelationshipDef
 from typedefs.models.attribute_def import AttributeDef
 
 
-
 class TypeRegistry:
     _instance = None
 

@@ -1,7 +1,16 @@
 import os
 import orjson
+import psycopg2
 from typedefs.models.entity_def import EntityDef
+from typedefs.registry import TypeRegistry
+from typedefs.storage.entity_def import create_entity_def
+from db.management.create_typedefs_tables import execute_create_tables
 
+
+conn = psycopg2.connect(os.environ["PG_CONN_STR"])
+type_registry = TypeRegistry()
+
+execute_create_tables(conn, "db/sql")
 
 def load_types(parent_folder: str):
     typedefs = []
@@ -16,6 +25,5 @@ def load_types(parent_folder: str):
 
 
 entity_defs = load_types("types")
-
 for entity_def in entity_defs:
-    print(entity_def.get_json())
+    create_entity_def(conn, type_registry, entity_def)

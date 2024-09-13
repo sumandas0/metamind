@@ -6,8 +6,7 @@ BEGIN
 END$$;
 
 CREATE TABLE IF NOT EXISTS type_defs (
-    guid VARCHAR(255) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL PRIMARY KEY,
     super_type VARCHAR(255),
     alias VARCHAR(255),
     description TEXT,
@@ -20,10 +19,8 @@ CREATE TABLE IF NOT EXISTS type_defs (
     updated_by VARCHAR(255) NOT NULL
 );
 
--- Create index on guid
-CREATE INDEX IF NOT EXISTS type_defs_guid ON type_defs (guid);
 -- Create index on name
-CREATE INDEX IF NOT EXISTS type_defs_name ON type_defs (name);
+CREATE UNIQUE INDEX IF NOT EXISTS type_defs_name ON type_defs (name);
 -- Create index on super_type
 CREATE INDEX IF NOT EXISTS type_defs_super_type ON type_defs (super_type);
 -- Create index on alias
