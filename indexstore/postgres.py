@@ -14,8 +14,10 @@ LOGGER = get_logger(__name__)
 class PostgresIndexStore:
     def __init__(self, conn: connection):
         self.conn = conn
+        LOGGER.info("PostgresIndexStore initialized with connection")
 
     def init_index(self) -> None:
+        LOGGER.info("Initializing index")
         index_stmt = """
             CREATE TABLE IF NOT EXISTS attributes_index (
                 guid VARCHAR(255) PRIMARY KEY,
@@ -29,8 +31,10 @@ class PostgresIndexStore:
         with self.conn.cursor() as cur:
             cur.execute(sql.SQL(index_stmt))
             self.conn.commit()
+        LOGGER.info("Index initialized successfully")
 
     def get_attribute_type_name(self, attribute: AttributeDef) -> str:
+        LOGGER.info(f"Getting attribute type name for {attribute.name}")
         match attribute.type:
             case BuiltinType.STRING:
                 return f"VARCHAR({attribute.max_length})"
@@ -49,9 +53,11 @@ class PostgresIndexStore:
             case EnumDef():
                 return f"VARCHAR(255)"
             case _:
+                LOGGER.error(f"Unsupported attribute type: {attribute.type}")
                 raise ValueError(f"Unsupported attribute type: {attribute.type}")
 
     def get_index_creation_stmt(self, attribute: AttributeDef, index_name: str) -> str:
+        LOGGER.info(f"Getting index creation statement for {attribute.name}")
         index_config = configparser.ConfigParser()
         index_config.read("index.config")
         match attribute.type:
@@ -71,6 +77,7 @@ class PostgresIndexStore:
                 return f"({index_name})"
 
     def add_attribute_index(self, entity_def: EntityDef, attribute: AttributeDef) -> None:
+        LOGGER.info(f"Adding attribute index for {entity_def.name}.{attribute.name}")
         if self.attribute_index_exists(entity_def, attribute):
             LOGGER.info(f"Index for {entity_def.name}.{attribute.name} already exists")
             return
@@ -99,20 +106,25 @@ class PostgresIndexStore:
             cur.execute(add_column_stmt)
             cur.execute(create_index_stmt)
             self.conn.commit()
+        LOGGER.info(f"Index {index_name} added successfully")
 
     def generate_index_name(self, entity_def: EntityDef, attribute: AttributeDef) -> str:
-        return f"{entity_def.name}_{attribute.name}"
+        index_name = f"{entity_def.name}_{attribute.name}"
+        LOGGER.info(f"Generated index name: {index_name}")
+        return index_name
 
     def attribute_index_exists(self, entity_def: EntityDef, attribute: AttributeDef) -> bool:
+        LOGGER.info(f"Checking if index exists for {entity_def.name}.{attribute.name}")
         index_name = self.generate_index_name(entity_def, attribute)
-        # Check if column with index_name exists else return false
         with self.conn.cursor() as cur:
             cur.execute(f"SELECT EXISTS (SELECT 1 FROM pg_class WHERE relname = '{index_name}');")
-            return cur.fetchone()[0]
+            exists = cur.fetchone()[0]
+        LOGGER.info(f"Index {'exists' if exists else 'does not exist'}")
+        return exists
 
     def remove_attribute_index(self, entity_def: EntityDef, attribute: AttributeDef) -> None:
+        LOGGER.info(f"Removing attribute index for {entity_def.name}.{attribute.name}")
         index_name = self.generate_index_name(entity_def, attribute)
-        # Check if column with index_name exists else return false
         if not self.attribute_index_exists(entity_def, attribute):
             LOGGER.info(f"Index for {entity_def.name}.{attribute.name} does not exist")
             return
@@ -136,9 +148,12 @@ class PostgresIndexStore:
             cur.execute(drop_column_stmt)
             cur.execute(drop_index_stmt)
             self.conn.commit()
+        LOGGER.info(f"Index {index_name} removed successfully")
 
     def list_indices(self) -> list[Index]:
-        # fetch all indices from attributes_index table with types
+        LOGGER.info("Listing all indices")
         with self.conn.cursor() as cur:
             cur.execute("SELECT index_name, index_type FROM attributes_index;")
-            return [Index(index_name=row[0], index_type=row[1]) for row in cur.fetchall()]
+            indices = [Index(index_name=row[0], index_type=row[1]) for row in cur.fetchall()]
+        LOGGER.info(f"Found {len(indices)} indices")
+        return indices
