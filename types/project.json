@@ -17,6 +17,20 @@
       "required": false,
       "index": true,
       "unique": false
+    },{
+      "name": "project_type",
+      "type": "text",
+      "description": "Type of project",
+      "required": false,
+      "index": true,
+      "unique": false
+    },{
+      "name": "project_owners",
+      "type": "text",
+      "description": "Owner of the projects",
+      "required": false,
+      "index": true,
+      "unique": false
     }
   ],
   "relationships": []

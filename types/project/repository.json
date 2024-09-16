@@ -18,6 +18,14 @@
       "required": true,
       "index": true,
       "unique": false
+    },
+    {
+      "name": "repository_provider",
+      "type": "string",
+      "description": "URL of the repository",
+      "required": true,
+      "index": true,
+      "unique": false
     }
   ],
   "relationships": [
